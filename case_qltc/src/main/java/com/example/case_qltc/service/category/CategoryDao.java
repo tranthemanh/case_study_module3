@@ -1,13 +1,12 @@
-package com.example.case_qltc.service;
+package com.example.case_qltc.service.category;
 
 import com.example.case_qltc.model.Category;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
-public class CategoryDao implements ICategory{
+public class CategoryDao implements ICategory {
     private String jdbcURL="jdbc:mysql://localhost:3306/financial_management";
     private String jdbcName="root";
     private String jdbcPassword="012345";

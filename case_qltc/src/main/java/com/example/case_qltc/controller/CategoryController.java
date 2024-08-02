@@ -1,7 +1,7 @@
 package com.example.case_qltc.controller;
 
 import com.example.case_qltc.model.Category;
-import com.example.case_qltc.service.CategoryDao;
+import com.example.case_qltc.service.category.CategoryDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @WebServlet(name="CategoryController", urlPatterns = "/categorys")
