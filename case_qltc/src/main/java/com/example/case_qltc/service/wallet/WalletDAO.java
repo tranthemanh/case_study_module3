@@ -52,7 +52,15 @@ public class WalletDAO implements IWalletService{
 
     @Override
     public void create(Wallet wallet) {
-
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("insert into wallet (walletName, amount) values (?,?)");
+        ){
+            preparedStatement.setString(1, wallet.getName());
+            preparedStatement.setInt(2, wallet.getAmount());
+            preparedStatement.executeUpdate();
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override

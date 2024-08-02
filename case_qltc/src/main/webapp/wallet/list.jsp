@@ -10,20 +10,26 @@
 <html>
 <head>
     <title>Quan Ly Tai Chinh</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 <div align="center">
     <h2>Quan Ly Vi Tien</h2>
-    <table border="1" cellpadding="10">
+    <h2>
+        <a href="/wallets?action=create">Them vi tien moi</a>
+    </h2>
+    <table cellpadding="10">
         <caption>
             <h3>Danh sach vi tien</h3>
         </caption>
         <tr>
+            <th></th>
             <th>Wallet Name</th>
             <th>Amount</th>
         </tr>
         <c:forEach items="${listWallet}" var="wallet">
             <tr>
+                <td><i class="fas fa-wallet"></i></td>
                 <td><c:out value="${wallet.name}"></c:out></td>
                 <td><c:out value="${wallet.amount}"></c:out></td>
             </tr>
