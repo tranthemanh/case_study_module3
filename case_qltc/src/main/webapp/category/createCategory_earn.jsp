@@ -20,7 +20,7 @@
 <body>
 <div class="container">
     <h1> Them Danh Muc</h1>
-    <h3><a href="/categories" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a></h3>
+    <h3><a href="/categories_earn" class="btn btn-secondary"><i class="fa fa-arrow-left" aria-hidden="true"></i> Back</a></h3>
     <c:out value="${message}"></c:out>
     <form method="post">
         <div class="mb-2">
