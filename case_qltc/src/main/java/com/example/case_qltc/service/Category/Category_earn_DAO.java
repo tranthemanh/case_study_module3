@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category_spend_DAO implements ICategory {
+public class Category_earn_DAO implements ICategory {
     private String jdbcURL = "jdbc:mysql://localhost:3306/financial_management";
     private String jdbcName = "root";
     private String jdbcPassword = "012345";
@@ -35,8 +35,9 @@ public class Category_spend_DAO implements ICategory {
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectAll)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
+                int id= rs.getInt("id");
                 String name = rs.getString("name");
-                category_earn.add(new Category(name));
+                category_earn.add(new Category(id,name));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

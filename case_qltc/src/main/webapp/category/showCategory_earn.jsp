@@ -25,6 +25,7 @@
             <tr>
                 <td><c:out value="${category_earn.name}"></c:out></td>
                 <td><a href="?action=delete&id=1"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                <td><a href="/categories_earn?action=edit&id=${category_earn.id}"> update </a></td>
             </tr>
         </c:forEach>
     </table>

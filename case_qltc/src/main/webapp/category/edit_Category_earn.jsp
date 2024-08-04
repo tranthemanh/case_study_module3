@@ -1,58 +1,40 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: dell
-  Date: 8/3/2024
-  Time: 7:05 PM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<!DOCTYPE html>
 <html>
 <head>
-    <title>Category</title>
+    <title>Cập nhật danh mục</title>
 </head>
 <body>
-<center>
-    <h1>User Management</h1>
-</center>
-<div align="center">
-    <form method="post">
-        <table border="1" cellpadding="5">
-            <caption>
-                <h2>
-                    Edit User
-                </h2>
-            </caption>
-            <tr>
-                <th>ID</th>
-                <td>
-                    <input type="text" name="id" size="45"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Name</th>
-                <td>
-                    <input type="text" name="name" size="45"
-                           value="<c:out value='${category.name}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <th>Note</th>
-                <td>
-                    <input type="text" name="note" size="15"
-                           value="<c:out value='${category.note}' />"
-                    />
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Save"/>
-                </td>
-            </tr>
-        </table>
-    </form>
+<h2>Cập nhật danh mục</h2>
+
+<!-- Hiển thị thông báo nếu có -->
+<c:if test="${not empty message}">
+    <p style="color: green;">${message}</p>
+</c:if>
+
+<!-- Form cập nhật danh mục -->
+<form method="post">
+    <input type="hidden" name="id" value="${categories_earn.id}"/>
+
+    <div>
+        <label for="name">Tên danh mục:</label>
+        <input type="text" id="name" name="name" value="${category_earn.name}" required/>
+    </div>
+
+    <div>
+        <label for="note">Ghi chú:</label>
+        <textarea id="note" name="note" required>${category_earn.note}</textarea>
+    </div>
+
+    <div>
+        <button type="submit">Cập nhật</button>
+    </div>
+</form>
+
+<!-- Nút quay lại -->
+<div>
+    <a href="categories_earn">Quay lại danh sách danh mục</a>
 </div>
 </body>
 </html>

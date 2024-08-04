@@ -70,9 +70,9 @@ public class Category_spendDAO implements ICategory{
         boolean rowUpdated;
         String update = "UPDATE category_spend SET name =?, note=? where id=?;";
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(update)) {
-            preparedStatement.setString(1, category.name);
-            preparedStatement.setString(2, category.note);
-            preparedStatement.setInt(3, category.id);
+            preparedStatement.setString(1, category.getName());
+            preparedStatement.setString(2, category.getNote());
+            preparedStatement.setInt(3, category.getId());
             rowUpdated = preparedStatement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new RuntimeException(e);

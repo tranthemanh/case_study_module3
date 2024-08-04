@@ -2,7 +2,7 @@ package com.example.case_qltc.controller;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
-import com.example.case_qltc.service.Category.Category_spend_DAO;
+import com.example.case_qltc.service.Category.Category_earn_DAO;
 import com.example.case_qltc.service.Category.Category_spendDAO;
 
 import javax.servlet.RequestDispatcher;
@@ -21,6 +21,7 @@ public class Category_spend_Service extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action") != null ? req.getParameter("action") : "";
         try {
             switch (action) {
@@ -44,9 +45,9 @@ public class Category_spend_Service extends HttpServlet {
     }
 
     private void showFormUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-        Category_spend_DAO category_spend_DAO = new Category_spend_DAO();
+        Category_earn_DAO category_earn_DAO = new Category_earn_DAO();
         int id = Integer.parseInt(req.getParameter("id"));
-        Category category_spend = category_spend_DAO.getCategoryByID(id);
+        Category category_spend = category_earn_DAO.getCategoryByID(id);
         req.setAttribute("category_spend", category_spend);
         RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_spend.jsp");
         requestDispatcher.forward(req, resp);
@@ -87,12 +88,26 @@ public class Category_spend_Service extends HttpServlet {
     }
 
     private void updateCategory(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-        String name = req.getParameter("name");
-        String note = req.getParameter("note");
-        Category category= new Category(name,note);
-        category_spendDao.updateCategory(category);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_spend.jsp");
-        requestDispatcher.forward(req, resp);
+        try {
+            int id = Integer.parseInt(req.getParameter("id"));
+            String name = req.getParameter("name");
+            String note = req.getParameter("note");
+
+            Category category_earn = new Category(id, name, note);
+
+            boolean isUpdated = category_spendDao.updateCategory(category_earn);
+
+            if (isUpdated) {
+                req.setAttribute("message", "Thay doi danh muc thanh cong!");
+            } else {
+                req.setAttribute("message", "Thay doi thay bai!");
+            }
+
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_spend.jsp");
+            requestDispatcher.forward(req, resp);
+        } catch (NumberFormatException e) {
+            resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid category ID format");
+        }
     }
 
     private void createCategory(HttpServletRequest req, HttpServletResponse resp) throws RuntimeException {
