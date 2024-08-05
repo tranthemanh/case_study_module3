@@ -8,8 +8,8 @@
 <h1><%= "Hello World!" %>
 </h1>
 <br/>
-<a href="categories_earn">Danh muc chi</a><br/>
-<a href="categories_spend">Danh muc thu</a>
+<a href="categories_earn">Danh muc thu nhap</a><br/>
+<a href="categories_spend">Danh muc chi tieu</a>
 
 </body>
 </html>

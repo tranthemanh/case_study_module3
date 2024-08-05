@@ -1,4 +1,4 @@
-package com.example.case_qltc.service.Category;
+package com.example.case_qltc.service.category;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
@@ -45,7 +45,6 @@ public class CategoryEarnDao implements ICategory {
         return category_earn;
     }
 
-    @Override
     public boolean insertCategory(Category category) throws CommonException {
         String insertCategory = "INSERT INTO category_earn(name, note) value (?, ?);";
         if (category.getName().isEmpty()) {
@@ -81,7 +80,6 @@ public class CategoryEarnDao implements ICategory {
         return rowUpdated;
     }
 
-    @Override
     public Category getCategoryByID(int id) {
         Category category_earn = null;
         String selectID = "select *from category_earn where  id=?;";
