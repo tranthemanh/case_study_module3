@@ -9,7 +9,7 @@ import java.util.List;
 public class CategoryDao implements ICategory {
     private String jdbcURL="jdbc:mysql://localhost:3306/financial_management";
     private String jdbcName="root";
-    private String jdbcPassword="012345";
+    private String jdbcPassword="123456Abc";
 
 
     protected Connection getConnection() {
