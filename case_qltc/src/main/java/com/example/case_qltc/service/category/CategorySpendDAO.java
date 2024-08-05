@@ -1,4 +1,4 @@
-package com.example.case_qltc.service.Category;
+package com.example.case_qltc.service.category;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
@@ -82,7 +82,6 @@ public class CategorySpendDAO implements ICategory{
         return rowUpdated;
     }
 
-    @Override
     public Category getCategoryByID(int id) {
         Category category = null;
         String selectID = "select *from category_spend where  id=?;";

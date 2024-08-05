@@ -13,9 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
 <body>
 <div class="container">
-    <h1>Quan ly danh muc</h1>
+    <h1>Quan ly danh muc chi tieu</h1>
     <h2><a href="categories_spend?action=create" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Them danh muc chi</a></h2>
-    <h2><a href="categories_spend?action=edit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sua danh muc</a></h2>
     <table class="table table-bordered">
         <tr>
             <th>Name</th>
@@ -25,7 +24,7 @@
             <tr>
                 <td><c:out value="${category_spend.name}"></c:out></td>
                 <td><a href="/categories_spend?action=delete&id=${category_spend.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
-                <td><a href="/categories_spend?action=edit&id=${category_spend.id}"><i class="fa fa-trash" update="true"></i></a></td>
+                <td><a href="/categories_spend?action=edit&id=${category_spend.id}"><i class="fa fa-trash"></i>update</a></td>
             </tr>
         </c:forEach>
     </table>

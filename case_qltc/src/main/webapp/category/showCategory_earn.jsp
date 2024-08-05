@@ -13,9 +13,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"></head>
 <body>
 <div class="container">
-    <h1>Quan ly danh muc chi tieu</h1>
+    <h1>Quan ly danh muc thu nhap</h1>
     <h2><a href="categories_earn?action=create" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Them danh muc</a></h2>
-    <h2><a href="categories?action=edit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sua danh muc</a></h2>
     <table class="table table-bordered">
         <tr>
             <th>Name</th>

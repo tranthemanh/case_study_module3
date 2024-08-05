@@ -1,8 +1,8 @@
-package com.example.case_qltc.controller;
+package com.example.case_qltc.controller.category;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
-import com.example.case_qltc.service.Category.CategoryEarnDao;
+import com.example.case_qltc.service.category.CategoryEarnDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;

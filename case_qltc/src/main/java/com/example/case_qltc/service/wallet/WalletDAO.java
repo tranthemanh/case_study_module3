@@ -12,7 +12,7 @@ public class WalletDAO implements IWalletService{
         Connection connection = null;
         String url = "jdbc:mysql://localhost:3306/financial_management";
         String user = "root";
-        String password = "123456Abc";
+        String password = "012345";
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
 
