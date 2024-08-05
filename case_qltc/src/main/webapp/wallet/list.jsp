@@ -24,14 +24,19 @@
         </caption>
         <tr>
             <th></th>
-            <th>Wallet Name</th>
-            <th>Amount</th>
+            <th>Ten Vi</th>
+            <th>So Tien</th>
+            <th>Lua Chon</th>
         </tr>
         <c:forEach items="${listWallet}" var="wallet">
             <tr>
                 <td><i class="fas fa-wallet"></i></td>
                 <td><c:out value="${wallet.name}"></c:out></td>
                 <td><c:out value="${wallet.amount}"></c:out></td>
+                <td>
+                    <a href="/wallets?action=update&id=${wallet.id}">Sua</a>
+                    <a href="/wallets?action=delete&id=${wallet.id}">Xoa</a>
+                </td>
             </tr>
         </c:forEach>
     </table>

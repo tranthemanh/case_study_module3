@@ -4,8 +4,6 @@ import com.example.case_qltc.model.Wallet;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 public class WalletDAO implements IWalletService{
@@ -34,13 +32,14 @@ public class WalletDAO implements IWalletService{
     public List<Wallet> showAll() {
         List<Wallet> wallets = new ArrayList<>();
         try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement("select walletName, amount from wallet");
+             PreparedStatement preparedStatement = connection.prepareStatement("select * from wallet");
         ){
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
+                int id = resultSet.getInt("id");
                 String walletName = resultSet.getString("walletName");
                 int amount = resultSet.getInt("amount");
-                Wallet wallet = new Wallet(walletName,amount);
+                Wallet wallet = new Wallet(id, walletName,amount);
                 wallets.add(wallet);
             }
 
@@ -65,16 +64,50 @@ public class WalletDAO implements IWalletService{
 
     @Override
     public Wallet findById(int id) {
-        return null;
+        Wallet wallet = null;
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("select * from wallet where id = ?");
+        ){
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                String walletName = resultSet.getString("walletName");
+                int amount = resultSet.getInt("amount");
+                wallet = new Wallet(id,walletName,amount);
+            }
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return wallet;
     }
 
     @Override
     public boolean update(Wallet wallet) {
-        return false;
+        boolean rowUpdated = false;
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("update wallet set walletName = ?, amount = ? where id = ?");
+        ){
+            preparedStatement.setString(1, wallet.getName());
+            preparedStatement.setInt(2, wallet.getAmount());
+            preparedStatement.setInt(3, wallet.getId());
+            rowUpdated = preparedStatement.executeUpdate() > 0;
+        }catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowUpdated;
     }
 
     @Override
     public boolean delete(int id) {
-        return false;
+        boolean rowDeleted = false;
+        try (Connection connection = getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement("delete from wallet where id = ?");
+        ){
+            preparedStatement.setInt(1, id);
+            rowDeleted = preparedStatement.executeUpdate() > 0;
+        }catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+        return rowDeleted;
     }
 }

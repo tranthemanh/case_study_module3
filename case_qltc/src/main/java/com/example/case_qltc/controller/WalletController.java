@@ -22,7 +22,13 @@ public class WalletController extends HttpServlet {
         action = action == null ? "" : action;
         switch (action) {
             case "create":
-                formCreate(request,response);
+                formCreate(request, response);
+                break;
+            case "update":
+                formUpdate(request, response);
+                break;
+            case "delete":
+                formDelete(request,response);
                 break;
             default:
                 List<Wallet> listWallet = walletDAO.showAll();
@@ -30,12 +36,28 @@ public class WalletController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/wallet/list.jsp");
                 dispatcher.forward(request, response);
         }
-        
+
+    }
+
+    private void formDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Wallet walletDelete = walletDAO.findById(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/wallet/delete.jsp");
+        request.setAttribute("walletDelete", walletDelete);
+        dispatcher.forward(request,response);
+    }
+
+    private void formUpdate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Wallet updateWallet = walletDAO.findById(id);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/wallet/update.jsp");
+        request.setAttribute("wallet", updateWallet);
+        dispatcher.forward(request, response);
     }
 
     private void formCreate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         RequestDispatcher dispatcher = request.getRequestDispatcher("/wallet/create.jsp");
-        dispatcher.forward(request,response);
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -46,7 +68,28 @@ public class WalletController extends HttpServlet {
             case "create":
                 createWallet(request, response);
                 break;
+            case "update":
+                updateWallet(request, response);
+                break;
+            case "delete":
+                deleteWallet(request, response);
+                break;
         }
+    }
+
+    private void deleteWallet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        walletDAO.delete(id);
+        response.sendRedirect(request.getContextPath()+"/wallets");
+    }
+
+    private void updateWallet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        String name = request.getParameter("name");
+        int amount = Integer.parseInt(request.getParameter("amount"));
+        Wallet wallet = new Wallet(id, name, amount);
+        walletDAO.update(wallet);
+        response.sendRedirect(request.getContextPath() + "/wallets");
     }
 
     private void createWallet(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -55,6 +98,6 @@ public class WalletController extends HttpServlet {
         Wallet wallet = new Wallet(name, amount);
         System.out.println(wallet);
         walletDAO.create(wallet);
-        response.sendRedirect(request.getContextPath()+"/wallets");
+        response.sendRedirect(request.getContextPath() + "/wallets");
     }
 }
