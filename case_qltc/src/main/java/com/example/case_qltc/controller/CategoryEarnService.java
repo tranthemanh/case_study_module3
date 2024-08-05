@@ -2,8 +2,7 @@ package com.example.case_qltc.controller;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
-import com.example.case_qltc.service.Category.Category_earn_DAO;
-import com.example.case_qltc.service.Category.Category_spendDAO;
+import com.example.case_qltc.service.Category.CategoryEarnDao;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -15,13 +14,12 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet(name = "Category_spend_Service", urlPatterns = "/categories_spend")
-public class Category_spend_Service extends HttpServlet {
-    Category_spendDAO category_spendDao = new Category_spendDAO();
+@WebServlet(name = "CategoryEarnService", urlPatterns = "/categories_earn")
+public class CategoryEarnService extends HttpServlet {
+    CategoryEarnDao category_earn_Dao = new CategoryEarnDao();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.setCharacterEncoding("UTF-8");
         String action = req.getParameter("action") != null ? req.getParameter("action") : "";
         try {
             switch (action) {
@@ -32,10 +30,13 @@ public class Category_spend_Service extends HttpServlet {
                 case "edit":
                     showFormUpdate(req, resp);
                     break;
+                case"delete":
+                    DeleteCategory_earn(req,resp);
+                    break;
                 default:
-                    List<Category> categories_spend = category_spendDao.getAllCategory();
-                    req.setAttribute("categories_spend", categories_spend);
-                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/showCategory_spend.jsp");
+                    List<Category> categories_earn = category_earn_Dao.getAllCategory();
+                    req.setAttribute("categories_earn", categories_earn);
+                    RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/showCategory_earn.jsp");
                     requestDispatcher.forward(req, resp);
             }
         } catch (SQLException e) {
@@ -44,18 +45,33 @@ public class Category_spend_Service extends HttpServlet {
 
     }
 
+    private void DeleteCategory_earn(HttpServletRequest req, HttpServletResponse resp) {
+        int id_Category_earn= Integer.parseInt(req.getParameter("id"));
+        category_earn_Dao.deleteCategory(id_Category_earn);
+
+        List<Category> categories_earn = category_earn_Dao.getAllCategory();
+        req.setAttribute("categories_earn",categories_earn);
+        try {
+            req.getRequestDispatcher("/category/showCategory_earn.jsp").forward(req,resp);
+        } catch (ServletException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void showFormUpdate(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, SQLException {
-        Category_earn_DAO category_earn_DAO = new Category_earn_DAO();
+        CategoryEarnDao category_earn_DAO = new CategoryEarnDao();
         int id = Integer.parseInt(req.getParameter("id"));
-        Category category_spend = category_earn_DAO.getCategoryByID(id);
-        req.setAttribute("category_spend", category_spend);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_spend.jsp");
+        Category category_earn = category_earn_DAO.getCategoryByID(id);
+        req.setAttribute("category_earn", category_earn);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_earn.jsp");
         requestDispatcher.forward(req, resp);
 
     }
 
     private void showFormCreate(HttpServletRequest req, HttpServletResponse resp) {
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/createCategory_spend.jsp");
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/createCategory_earn.jsp");
         try {
             requestDispatcher.forward(req, resp);
         } catch (ServletException e) {
@@ -78,6 +94,7 @@ public class Category_spend_Service extends HttpServlet {
                 case "edit":
                     updateCategory(req, resp);
                     break;
+
             }
         } catch (ServletException e) {
             throw new RuntimeException(e);
@@ -95,7 +112,7 @@ public class Category_spend_Service extends HttpServlet {
 
             Category category_earn = new Category(id, name, note);
 
-            boolean isUpdated = category_spendDao.updateCategory(category_earn);
+            boolean isUpdated = category_earn_Dao.updateCategory(category_earn);
 
             if (isUpdated) {
                 req.setAttribute("message", "Thay doi danh muc thanh cong!");
@@ -103,7 +120,7 @@ public class Category_spend_Service extends HttpServlet {
                 req.setAttribute("message", "Thay doi thay bai!");
             }
 
-            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_spend.jsp");
+            RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/edit_Category_earn.jsp");
             requestDispatcher.forward(req, resp);
         } catch (NumberFormatException e) {
             resp.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid category ID format");
@@ -113,10 +130,10 @@ public class Category_spend_Service extends HttpServlet {
     private void createCategory(HttpServletRequest req, HttpServletResponse resp) throws RuntimeException {
         String name = req.getParameter("name");
         String note = req.getParameter("note");
-        Category category_spend = new Category(name, note);
-        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/createCategory_spend.jsp");
+        Category category = new Category(name, note);
+        RequestDispatcher requestDispatcher = req.getRequestDispatcher("/category/createCategory_earn.jsp");
         try {
-            if (category_spendDao.insertCategory(category_spend)) {
+            if (category_earn_Dao.insertCategory(category)) {
                 req.setAttribute("message", "Them danh muc thanh cong");
             } else {
                 req.setAttribute("message", "Them danh muc khong thanh cong");

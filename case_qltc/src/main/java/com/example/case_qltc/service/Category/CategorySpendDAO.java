@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category_spendDAO implements ICategory{
+public class CategorySpendDAO implements ICategory{
     private String jdbcURL = "jdbc:mysql://localhost:3306/financial_management";
     private String jdbcName = "root";
     private String jdbcPassword = "012345";
@@ -35,8 +35,10 @@ public class Category_spendDAO implements ICategory{
         try (Connection connection = getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(selectAllCategory_spend)) {
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
+                int id= rs.getInt("id");
                 String name = rs.getString("name");
-                categories_spend.add(new Category(name));
+                String note= rs.getString("note");
+                categories_spend.add(new Category(id,name,note));
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
@@ -101,6 +103,14 @@ public class Category_spendDAO implements ICategory{
 
     @Override
     public boolean deleteCategory(int id) {
-        return false;
+        boolean rowDelete;
+        String deleteCategory_spend="delete from category_spend where id=?;";
+        try(Connection connection= getConnection(); PreparedStatement preparedStatement= connection.prepareStatement(deleteCategory_spend)) {
+            preparedStatement.setInt(1,id);
+             rowDelete=preparedStatement.executeUpdate()>0;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return rowDelete;
     }
 }

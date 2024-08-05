@@ -24,7 +24,8 @@
         <c:forEach items="${categories_spend}" var="category_spend">
             <tr>
                 <td><c:out value="${category_spend.name}"></c:out></td>
-                <td><a href="?action=delete&id=1"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                <td><a href="/categories_spend?action=delete&id=${category_spend.id}"><i class="fa fa-trash" aria-hidden="true"></i></a></td>
+                <td><a href="/categories_spend?action=edit&id=${category_spend.id}"><i class="fa fa-trash" update="true"></i></a></td>
             </tr>
         </c:forEach>
     </table>

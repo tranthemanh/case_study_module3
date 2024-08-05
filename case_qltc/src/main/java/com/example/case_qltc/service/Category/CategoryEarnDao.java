@@ -7,7 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Category_earn_DAO implements ICategory {
+public class CategoryEarnDao implements ICategory {
     private String jdbcURL = "jdbc:mysql://localhost:3306/financial_management";
     private String jdbcName = "root";
     private String jdbcPassword = "012345";
@@ -102,6 +102,14 @@ public class Category_earn_DAO implements ICategory {
 
     @Override
     public boolean deleteCategory(int id) {
-        return false;
+            boolean rowDelete;
+            String deleteCategory_earn="delete from category_earn where id=?;";
+            try(Connection connection= getConnection(); PreparedStatement preparedStatement= connection.prepareStatement(deleteCategory_earn)) {
+                preparedStatement.setInt(1,id);
+                rowDelete=preparedStatement.executeUpdate()>0;
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            return rowDelete;
     }
 }
