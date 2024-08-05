@@ -1,19 +1,15 @@
-package com.example.case_qltc.service.Category;
+package com.example.case_qltc.service.category;
 
-import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
 
 import java.util.List;
 
-public interface ICategory {
-    List<Category> getAllCategory();
+public interface ICategory{
+    public List<Category> getAllCategory();
 
-    boolean insertCategory(Category category) throws CommonException;
+    public void insertCategory(Category category);
 
-    boolean updateCategory(Category category) throws CommonException;
+    public boolean updateCategory(Category category);
 
-    Category getCategoryByID(int id);
-
-    boolean deleteCategory(int id) throws CommonException;
-
+    public boolean deleteCategory(int id);
 }
