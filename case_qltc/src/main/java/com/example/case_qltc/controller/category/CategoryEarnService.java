@@ -1,4 +1,4 @@
-package com.example.case_qltc.controller;
+package com.example.case_qltc.controller.category;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
