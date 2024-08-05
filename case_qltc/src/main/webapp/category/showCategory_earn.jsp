@@ -15,7 +15,6 @@
 <div class="container">
     <h1>Quan ly danh muc chi tieu</h1>
     <h2><a href="categories_earn?action=create" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Them danh muc</a></h2>
-    <h2><a href="categories?action=edit" class="btn btn-primary"><i class="fa-solid fa-plus"></i> Sua danh muc</a></h2>
     <table class="table table-bordered">
         <tr>
             <th>Name</th>

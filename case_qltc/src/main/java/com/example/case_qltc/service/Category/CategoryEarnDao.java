@@ -1,4 +1,4 @@
-package com.example.case_qltc.service.Category;
+package com.example.case_qltc.service.category;
 
 import com.example.case_qltc.exception.CommonException;
 import com.example.case_qltc.model.Category;
@@ -81,7 +81,6 @@ public class CategoryEarnDao implements ICategory {
         return rowUpdated;
     }
 
-    @Override
     public Category getCategoryByID(int id) {
         Category category_earn = null;
         String selectID = "select *from category_earn where  id=?;";
